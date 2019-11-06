@@ -1,0 +1,29 @@
+console.log('function starts')
+
+const AWS = require('aws-sdk')
+const docClient = new AWS.DynamoDB.DocumentClient({region: 'eu-west-1'})
+
+exports.handler = function(event, context, callback){
+    console.log('processing event: ' + JSON.stringify(event, null, 2))
+
+    let params =  {
+        Item: {
+            UserName: "Jeremias D.S.A",
+            UserPhone: "999999999",
+            Password: "1234",
+            PlaceName: "Jeremias100",
+            UserId: "us-east-2:5ad7262d-7989-468e-8595-4b86cc3a30f5"
+        },
+
+        TableName: 'TABLE_NAME'
+    };
+
+    docClient.put(params, function(err,data){
+        if(err) {
+            callback(err, null)
+        }else{
+            callback(null, data)
+        }
+    });
+
+}
